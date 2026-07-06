@@ -1,0 +1,20 @@
+# setup-monitoring.yml
+- hosts: all
+  become: yes
+  tasks:
+    # 1. 安裝 Node Exporter (監控 VM CPU/RAM/Disk)
+    - name: Install node_exporter
+      apt: name=prometheus-node-exporter state=present
+
+    # 2. 安裝 DB Exporter (例如 MySQL/TiDB Exporter)
+    - name: Deploy DB exporter
+      docker_container:
+        name: db-exporter
+        image: prom/mysqld-exporter
+        ports: ["9104:9104"]
+        env:
+          DATA_SOURCE_NAME: "user:password@(localhost:3306)/"
+
+    # 3. 設定服務開機自啟並通知 Prometheus
+    - name: Ensure services are running
+      systemd: name=prometheus-node-exporter state=started enabled=yes
