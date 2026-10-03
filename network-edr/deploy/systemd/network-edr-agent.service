@@ -1,0 +1,18 @@
+[Unit]
+Description=Network EDR Host Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/network-edr/agent.env
+ExecStart=/opt/network-edr/bin/network-edr-agent
+Restart=always
+RestartSec=5
+NoNewPrivileges=false
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: deploy/Containerfile.server
+    container_name: network-edr-server
+    restart: unless-stopped
+    environment:
+      EDR_SERVER_ADDR: ":8080"
+    expose:
+      - "8080"
+    networks: [edr]
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Containerfile.web
+    container_name: network-edr-web
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    depends_on: [server]
+    networks: [edr]
+
+networks:
+  edr:
+    driver: bridge
