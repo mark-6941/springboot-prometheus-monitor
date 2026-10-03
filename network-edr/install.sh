@@ -5,12 +5,12 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PREFIX="/opt/network-edr"
 
 echo "[1/7] Checking tools..."
-command -v podman >/dev/null || { echo "ERROR: podman is required"; exit 1; }
-command -v go >/dev/null || { echo "ERROR: Go is required to build the host agent"; exit 1; }
+#command -v podman >/dev/null || { echo "ERROR: podman is required"; exit 1; }
+#command -v go >/dev/null || { echo "ERROR: Go is required to build the host agent"; exit 1; }
 
-echo "[2/7] Building agent..."
-mkdir -p "$PREFIX/bin" /etc/network-edr
-go build -trimpath -ldflags="-s -w" -o "$PREFIX/bin/network-edr-agent" "$ROOT/agent"
+#echo "[2/7] Building agent..."
+#mkdir -p "$PREFIX/bin" /etc/network-edr
+#go build -trimpath -ldflags="-s -w" -o "$PREFIX/bin/network-edr-agent" "$ROOT/agent"
 
 echo "[3/7] Detecting interface..."
 IFACE="${EDR_INTERFACE:-}"
